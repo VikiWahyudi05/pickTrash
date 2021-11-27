@@ -3,4 +3,7 @@
     <string name="email">Email</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+    <string name="adminHome">Admin Homepage</string>
+    <string name="daftarLaporan">Daftar Laporan</string>
+    <string name="namaAdmin">Nama Admin</string>
 </resources>

@@ -10,6 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PickTrash">
         <activity
+            android:name=".admin.LaporanActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PickTrash.NoActionBar" />
+        <activity
+            android:name=".admin.AdminHomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
