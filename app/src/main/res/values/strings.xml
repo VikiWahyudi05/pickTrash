@@ -6,4 +6,6 @@
     <string name="adminHome">Admin Homepage</string>
     <string name="daftarLaporan">Daftar Laporan</string>
     <string name="namaAdmin">Nama Admin</string>
+    <string name="namaUser">Nama User</string>
+    <string name="deskripsi">Deskripsi Laporan</string>
 </resources>
