@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#009688"
+    android:background="@color/green_009"
     tools:context=".admin.AdminHomeActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/nama"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="24dp"
         android:text="@string/adminHome"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="#4db6ac"
+        android:background="@color/orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView2">
@@ -52,7 +52,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:text="@string/daftarLaporan"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -71,13 +71,13 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        app:layout_constraintTop_toBottomOf="@+id/nama">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp"
-            android:background="#4db6ac"
+            android:background="@color/green_4bd"
             android:orientation="horizontal">
 
             <ImageView
@@ -93,7 +93,7 @@
                 android:layout_marginLeft="8dp"
                 android:text="@string/namaAdmin"
                 android:layout_gravity="center"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"

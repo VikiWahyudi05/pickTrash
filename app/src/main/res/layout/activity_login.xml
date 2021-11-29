@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#009688"
+    android:background="@color/green_009"
     tools:context=".LoginActivity">
 
     <androidx.cardview.widget.CardView
@@ -22,7 +22,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#4db6ac">
+            android:background="@color/green_4bd">
 
             <EditText
                 android:id="@+id/etEmail"
@@ -37,10 +37,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/app_name" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -72,9 +72,9 @@
                 android:layout_marginTop="24dp"
                 android:background="@color/design_default_color_primary_dark"
                 android:text="@string/login"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textStyle="bold"
-                app:backgroundTint="#FF5722"
+                app:backgroundTint="@color/orange"
                 app:layout_constraintEnd_toEndOf="@+id/etPassword"
                 app:layout_constraintStart_toStartOf="@+id/etPassword"
                 app:layout_constraintTop_toBottomOf="@+id/etPassword" />
@@ -82,14 +82,14 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/nama"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="24dp"
         android:text="@string/app_name"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

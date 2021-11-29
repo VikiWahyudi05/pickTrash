@@ -17,10 +17,16 @@
             android:name=".admin.AdminHomeActivity"
             android:exported="false" />
         <activity
+            android:name=".user.LaporanUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".user.UserHomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name="LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>

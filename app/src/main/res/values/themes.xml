@@ -17,6 +17,12 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/green_4bd</item>
+        <item name="colorPrimaryDark">@color/green_009</item>
+        <item name="colorAccent">@color/white</item>
+    </style>
     <style name="Theme.PickTrash.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.PickTrash.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

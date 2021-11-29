@@ -8,4 +8,9 @@
     <string name="namaAdmin">Nama Admin</string>
     <string name="namaUser">Nama User</string>
     <string name="deskripsi">Deskripsi Laporan</string>
+    <string name="nama">Nama</string>
+    <string name="laporan">Laporan</string>
+    <string name="nama_hint">Nama</string>
+    <string name="deskripsi_hint">Deskripsi</string>
+    <string name="location">Lokasi</string>
 </resources>
