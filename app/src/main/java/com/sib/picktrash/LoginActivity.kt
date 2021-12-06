@@ -17,7 +17,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var store: FirebaseFirestore
+    private lateinit var fStore: FirebaseFirestore
     private var valid = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         auth = FirebaseAuth.getInstance()
-        store = FirebaseFirestore.getInstance()
+        fStore = FirebaseFirestore.getInstance()
 
         binding.apply {
             btnLogin.setOnClickListener {
@@ -65,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkUserAccessLevel(uid: String) {
-        val df = store.collection("Users").document(uid)
+        val df = fStore.collection("Users").document(uid)
 
         df.get().addOnSuccessListener { documentSnapshot ->
             Log.d("TAG", "onSuccess: " + documentSnapshot.data)

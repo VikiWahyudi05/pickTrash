@@ -3,13 +3,10 @@ package com.sib.picktrash
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Patterns
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sib.picktrash.databinding.ActivityRegisterBinding
 import com.sib.picktrash.user.UserHomeActivity
@@ -19,7 +16,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var store: FirebaseFirestore
+    private lateinit var fStore: FirebaseFirestore
     private var valid = true
 
 
@@ -29,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
-        store = FirebaseFirestore.getInstance()
+        fStore = FirebaseFirestore.getInstance()
 
         binding.apply {
             btnRegister.setOnClickListener{
@@ -45,7 +42,7 @@ class RegisterActivity : AppCompatActivity() {
                             val user = auth.currentUser
                             Toast.makeText(this@RegisterActivity, "Akun berhasil dibuat", Toast.LENGTH_SHORT)
                                 .show()
-                            val df = store.collection("Users").document(
+                            val df = fStore.collection("Users").document(
                                 user!!.uid
                             )
                             val userInfo: MutableMap<String, Any> = HashMap()
