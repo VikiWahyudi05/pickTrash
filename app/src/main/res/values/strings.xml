@@ -13,4 +13,6 @@
     <string name="nama_hint">Nama</string>
     <string name="deskripsi_hint">Deskripsi</string>
     <string name="location">Lokasi</string>
+    <string name="register">Register</string>
+    <string name="ready">Already Have Account?</string>
 </resources>

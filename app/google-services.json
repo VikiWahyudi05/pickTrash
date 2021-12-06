@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "915087115653",
+    "project_id": "picktrash-82e02",
+    "storage_bucket": "picktrash-82e02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915087115653:android:c16c4da9bf661a85bb70ec",
+        "android_client_info": {
+          "package_name": "com.sib.picktrash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915087115653-bumk6vlm2cjqt37n081fdde6i56315ov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuqI_aGYyT8Y4eYaY2H3OfUdmys5LCS-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915087115653-bumk6vlm2cjqt37n081fdde6i56315ov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

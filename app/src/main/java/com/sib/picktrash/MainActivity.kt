@@ -9,3 +9,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 }
+
+
+//implementation platform('com.google.firebase:firebase-bom:29.0.1')
