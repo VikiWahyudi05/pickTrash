@@ -2,6 +2,7 @@ package com.sib.picktrash.user
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.firebase.firestore.FirebaseFirestore
 import com.sib.picktrash.databinding.ActivityLaporanUserBinding
 
 class LaporanUserActivity : AppCompatActivity() {
