@@ -12,17 +12,21 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sib.picktrash.LoginActivity
+import com.sib.picktrash.admin.LaporanAdminActivity
 import com.sib.picktrash.databinding.ActivityUserHomeBinding
 
 class UserHomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserHomeBinding
-    private lateinit var store: FirebaseFirestore
+    private lateinit var fStore: FirebaseFirestore
+    private lateinit var fAuth: FirebaseAuth
 
     private val LOCATION_PERMISSION_REQ_CODE = 1000;
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
 
@@ -33,7 +37,14 @@ class UserHomeActivity : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        store = FirebaseFirestore.getInstance()
+        fStore = FirebaseFirestore.getInstance()
+        fAuth = FirebaseAuth.getInstance()
+        val fUser: FirebaseUser? = fAuth.currentUser
+
+        binding.apply {
+            email.setText(fUser?.email)
+            nama.setText(fUser?.displayName)
+        }
 
         binding.logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
@@ -41,13 +52,41 @@ class UserHomeActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.toUser.setOnClickListener(View.OnClickListener {
+        binding.toUser.setOnClickListener {
             startActivity(
                 Intent(
                     applicationContext,
                     LaporanUserActivity::class.java
                 )
             )
+        }
+
+        binding.ivVerifikasi.setOnClickListener {
+            fUser?.sendEmailVerification()?.addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Toast.makeText(
+                        this@UserHomeActivity,
+                        "Email verifikasi telah dikirim",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this@UserHomeActivity,
+                        "${it.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+        }
+
+        binding.toUser.setOnClickListener(View.OnClickListener {
+            val fUser: FirebaseUser? = fAuth.currentUser
+            val intent = Intent(this, LaporanUserActivity::class.java)
+            intent.putExtra(LaporanUserActivity.EXTRA_USER, fUser?.displayName )
+            intent.putExtra(LaporanUserActivity.EXTRA_LATITUDE, latitude)
+            intent.putExtra(LaporanUserActivity.EXTRA_LONGITUDE, longitude)
+            startActivity(intent)
         })
 
         getCurrentLocation()

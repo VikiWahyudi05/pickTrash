@@ -10,5 +10,3 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-
-//implementation platform('com.google.firebase:firebase-bom:29.0.1')
