@@ -33,7 +33,7 @@
                 android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:hint="@string/nama"
-                android:inputType="textEmailAddress"
+                android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"

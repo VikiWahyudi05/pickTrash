@@ -1,13 +1,17 @@
 package com.sib.picktrash
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.sib.picktrash.databinding.ActivityRegisterBinding
 import com.sib.picktrash.user.UserHomeActivity
 import java.util.HashMap
@@ -39,14 +43,26 @@ class RegisterActivity : AppCompatActivity() {
                         etPassword.getText().toString()
                     )
                         .addOnSuccessListener {
-                            val user = auth.currentUser
+                            val nama = etNama.getText().toString()
+                            val user = Firebase.auth.currentUser
+                            val profileUpdates = userProfileChangeRequest {
+                                displayName = nama
+                            }
+
+                            user!!.updateProfile(profileUpdates)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Log.d(TAG, "User profile updated.")
+                                    }
+                                }
+
                             Toast.makeText(this@RegisterActivity, "Akun berhasil dibuat", Toast.LENGTH_SHORT)
                                 .show()
                             val df = fStore.collection("Users").document(
-                                user!!.uid
+                                user.uid
                             )
                             val userInfo: MutableMap<String, Any> = HashMap()
-                            userInfo["UserName"] = etNama.getText().toString()
+                            userInfo["UserName"] = nama
                             userInfo["UserEmail"] = etEmail.getText().toString()
                             userInfo["isUser"] = "1"
                             df.set(userInfo)
@@ -61,15 +77,19 @@ class RegisterActivity : AppCompatActivity() {
                         }
                 }
             }
-            btnLogin.setOnClickListener(View.OnClickListener {
+            btnLogin.setOnClickListener {
                 startActivity(
                     Intent(
                         applicationContext,
                         LoginActivity::class.java
                     )
                 )
-            })
+            }
         }
+
+
+
+
 
     }
 
