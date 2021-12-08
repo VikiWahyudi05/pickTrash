@@ -1,25 +1,19 @@
 package com.sib.picktrash.user
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sib.picktrash.LoginActivity
-import com.sib.picktrash.RegisterActivity
 import com.sib.picktrash.databinding.ActivityUserHomeBinding
 
 class UserHomeActivity : AppCompatActivity() {
@@ -56,17 +50,7 @@ class UserHomeActivity : AppCompatActivity() {
             )
         })
 
-        getAllData()
         getCurrentLocation()
-    }
-
-    fun getAllData(){
-        store.collection("Users").get().addOnSuccessListener {
-            for (result in it.documents){
-                Log.i("firedata","${result.data?.values}")
-            }
-//            Log.i("firedata","${it.documents.get(0).data?.get("UserName")}")
-        }
     }
 
     private fun getCurrentLocation() {
@@ -90,6 +74,7 @@ class UserHomeActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT).show()
             }
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
@@ -107,4 +92,5 @@ class UserHomeActivity : AppCompatActivity() {
             }
         }
     }
+
 }
