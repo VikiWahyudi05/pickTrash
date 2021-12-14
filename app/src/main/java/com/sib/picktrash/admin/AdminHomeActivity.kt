@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sib.picktrash.LoginActivity
 import com.sib.picktrash.RegisterActivity
@@ -14,14 +15,16 @@ import com.sib.picktrash.databinding.ActivityAdminHomeBinding
 class AdminHomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdminHomeBinding
-    private lateinit var store: FirebaseFirestore
+    private lateinit var fStore: FirebaseFirestore
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        store = FirebaseFirestore.getInstance()
+        fStore = FirebaseFirestore.getInstance()
 
         binding.logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
@@ -39,16 +42,15 @@ class AdminHomeActivity : AppCompatActivity() {
             )
         })
 
-        getAllData()
+
+        auth = FirebaseAuth.getInstance()
+        val fUser = auth.currentUser
+
+        binding.apply {
+            tvNamaAdmin.setText(fUser?.displayName)
+            fUser?.displayName?.let { Log.i("TAG", it) }
+        }
+
     }
 
-    fun getAllData(){
-        store.collection("Users").get().addOnSuccessListener {
-//            for (result in it.documents){
-//                Log.i("firedata","${result.data?.values}")
-//            }
-            Log.i("firedata","${it.documents.get(0).data?.get("UserName")}")
-            binding.tvNamaAdmin.text = "${it.documents.get(0).data?.get("UserName")}"
-        }
-    }
 }
