@@ -1,5 +1,6 @@
 package com.sib.picktrash.admin
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -25,7 +26,12 @@ class LaporanAdapter (private val laporan:List<LaporanModel>) : RecyclerView.Ada
                 tvNama.text = laporan.name
                 tvDeskripsi.text = laporan.description
                 itemView.setOnClickListener {
-                    Log.i("laporan",laporan.latitude.toString())
+                    val intent = Intent(itemView.context,DetailLaporanActivity::class.java)
+                    intent.putExtra(DetailLaporanActivity.EXTRA_NAME, laporan.name)
+                    intent.putExtra(DetailLaporanActivity.EXTRA_DESKRIPSI, laporan.description)
+                    intent.putExtra(DetailLaporanActivity.EXTRA_LATITUDE, laporan.latitude)
+                    intent.putExtra(DetailLaporanActivity.EXTRA_LONGITUDE, laporan.longitude)
+                    itemView.context.startActivity(intent)
                 }
             }
         }
