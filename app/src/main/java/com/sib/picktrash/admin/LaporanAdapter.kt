@@ -1,5 +1,6 @@
 package com.sib.picktrash.admin
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,9 @@ class LaporanAdapter (private val laporan:List<LaporanModel>) : RecyclerView.Ada
             with(binding) {
                 tvNama.text = laporan.name
                 tvDeskripsi.text = laporan.description
+                itemView.setOnClickListener {
+                    Log.i("laporan",laporan.latitude.toString())
+                }
             }
         }
     }

@@ -37,7 +37,7 @@ class AdminHomeActivity : AppCompatActivity() {
             startActivity(
                 Intent(
                     applicationContext,
-                    LaporanAdminActivity::class.java
+                    LaporanActivity::class.java
                 )
             )
         })
