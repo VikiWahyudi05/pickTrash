@@ -36,25 +36,35 @@ class ListLaporanFragment : Fragment() {
                 .addOnSuccessListener {
                     val listReport: ArrayList<LaporanModel> = ArrayList()
                     listReport.clear()
-
                     for (document in it) {
-                        listReport.add((LaporanModel(
-                            document.data.get("name") as String,
-                            document.data.get("description") as String,
-                            document.data.get("latitude") as Double,
-                            document.data.get("longitude") as Double,
-                            document.data.get("imageUrl") as String
-                        )))
+                        if (document.getString("status") as String == "0") {
+                            listReport.add((LaporanModel(
+                                document.data.get("name") as String,
+                                document.data.get("description") as String,
+                                document.data.get("latitude") as Double,
+                                document.data.get("longitude") as Double,
+                                document.data.get("imageUrl") as String,
+                                document.data.get("alamat") as String,
+                                document.data.get("status") as String
+                            )))
+                        }
+                        Log.i("TAG", it.documents[0]["status"].toString())
+                        val laporanAdapter = LaporanAdapter(listReport)
+                        listBinding.rvLaporan.apply {
+                            layoutManager = LinearLayoutManager(context)
+                            adapter = laporanAdapter
+                        }
+
                     }
-                    val laporanAdapter = LaporanAdapter(listReport)
-                    listBinding.rvLaporan.apply {
-                        layoutManager = LinearLayoutManager(context)
-                        adapter = laporanAdapter
-                    }
+
+
                 }
                 .addOnFailureListener {
                     Log.v("TAG", "gagal mengambil data")
                 }
         }
     }
+
+
 }
+

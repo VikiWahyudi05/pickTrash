@@ -31,4 +31,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_laporan">LaporanActivity</string>
     <string name="img_user_list">IMG User List</string>
+    <string name="nama_alamat">Alamat</string>
 </resources>
