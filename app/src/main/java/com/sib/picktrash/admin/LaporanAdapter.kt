@@ -1,10 +1,11 @@
 package com.sib.picktrash.admin
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.sib.picktrash.databinding.ItemLaporanBinding
 
 class LaporanAdapter (private val laporan:List<LaporanModel>) : RecyclerView.Adapter<LaporanAdapter.LaporanViewHolder>() {
@@ -25,14 +26,20 @@ class LaporanAdapter (private val laporan:List<LaporanModel>) : RecyclerView.Ada
             with(binding) {
                 tvNama.text = laporan.name
                 tvDeskripsi.text = laporan.description
-                itemView.setOnClickListener {
-                    val intent = Intent(itemView.context,DetailLaporanActivity::class.java)
-                    intent.putExtra(DetailLaporanActivity.EXTRA_NAME, laporan.name)
-                    intent.putExtra(DetailLaporanActivity.EXTRA_DESKRIPSI, laporan.description)
-                    intent.putExtra(DetailLaporanActivity.EXTRA_LATITUDE, laporan.latitude)
-                    intent.putExtra(DetailLaporanActivity.EXTRA_LONGITUDE, laporan.longitude)
-                    itemView.context.startActivity(intent)
-                }
+                Glide.with(itemView.context)
+                    .load(laporan.imageUrl)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .circleCrop()
+                    .into(ivItemPhoto)
+            }
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context,DetailLaporanActivity::class.java)
+                intent.putExtra(DetailLaporanActivity.EXTRA_NAME, laporan.name)
+                intent.putExtra(DetailLaporanActivity.EXTRA_DESKRIPSI, laporan.description)
+                intent.putExtra(DetailLaporanActivity.EXTRA_LATITUDE, laporan.latitude)
+                intent.putExtra(DetailLaporanActivity.EXTRA_LONGITUDE, laporan.longitude)
+                intent.putExtra(DetailLaporanActivity.EXTRA_IMAGE_URL, laporan.imageUrl)
+                itemView.context.startActivity(intent)
             }
         }
     }

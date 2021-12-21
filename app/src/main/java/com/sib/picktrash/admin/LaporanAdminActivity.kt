@@ -13,6 +13,7 @@ class LaporanAdminActivity : AppCompatActivity() {
 
     var db = Firebase.firestore
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLaporanAdminBinding.inflate(layoutInflater)
@@ -34,7 +35,8 @@ class LaporanAdminActivity : AppCompatActivity() {
                         document.data.get("name") as String,
                         document.data.get("description") as String,
                         document.data.get("latitude") as Double,
-                        document.data.get("longitude") as Double
+                        document.data.get("longitude") as Double,
+                        document.data.get("imageUrl") as String
                     )))
                 }
                 var laporanAdapter = LaporanAdapter(listReport)

@@ -21,13 +21,15 @@ class ListLaporanFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         listBinding = FragmentListLaporanBinding.inflate(layoutInflater, container, false)
         return listBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         if (activity != null){
             db.collection("report")
                 .get()
@@ -40,10 +42,11 @@ class ListLaporanFragment : Fragment() {
                             document.data.get("name") as String,
                             document.data.get("description") as String,
                             document.data.get("latitude") as Double,
-                            document.data.get("longitude") as Double
+                            document.data.get("longitude") as Double,
+                            document.data.get("imageUrl") as String
                         )))
                     }
-                    var laporanAdapter = LaporanAdapter(listReport)
+                    val laporanAdapter = LaporanAdapter(listReport)
                     listBinding.rvLaporan.apply {
                         layoutManager = LinearLayoutManager(context)
                         adapter = laporanAdapter

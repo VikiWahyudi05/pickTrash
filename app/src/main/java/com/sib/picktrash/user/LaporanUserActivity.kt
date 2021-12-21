@@ -1,10 +1,18 @@
 package com.sib.picktrash.user
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import com.sib.picktrash.databinding.ActivityLaporanUserBinding
+import java.util.*
+import kotlin.collections.HashMap
 
 class LaporanUserActivity : AppCompatActivity() {
 
@@ -15,6 +23,7 @@ class LaporanUserActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityLaporanUserBinding
+    private lateinit var imageUri : Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +36,28 @@ class LaporanUserActivity : AppCompatActivity() {
 
         binding.btnKirim.setOnClickListener {
             createReport();
+        }
+
+        binding.btnUpload.setOnClickListener {
+            selectImage()
+        }
+
+    }
+
+
+    private fun selectImage() {
+        val intent = Intent()
+        intent.type = "image/"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent,100)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            imageUri = data?.data!!
+            binding.imgSampah.setImageURI(imageUri)
         }
     }
 
@@ -44,28 +75,49 @@ class LaporanUserActivity : AppCompatActivity() {
     }
 
     private fun saveReport() {
+
         val db = FirebaseFirestore.getInstance()
 
         val latitude = intent.getDoubleExtra(EXTRA_LATITUDE, 0.0)
         val longitude = intent.getDoubleExtra(EXTRA_LONGITUDE, 0.0)
 
-        val hashMap : HashMap<String, Any> = HashMap()
+        val fileName = UUID.randomUUID().toString() + ".jpg"
 
-        binding.apply {
-            hashMap["name"] = detailName.text.toString()
-            hashMap["description"] = detailDescription.text.toString()
-            hashMap["latitude"] = latitude
-            hashMap["longitude"] = longitude
-        }
-        db.collection("report")
-            .add(hashMap)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Laporan Terkirim", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Laporan Gagal Terkirim", Toast.LENGTH_SHORT).show()
-            }
+        val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
 
+        refStorage.putFile(imageUri)
+            .addOnSuccessListener(
+                OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
+                    taskSnapshot.storage.downloadUrl.addOnSuccessListener {
+                        val imageUrl = it.toString()
+
+                        val hashMap: HashMap<String, Any> = HashMap()
+
+                        binding.apply {
+                            hashMap["name"] = detailName.text.toString()
+                            hashMap["description"] = detailDescription.text.toString()
+                            hashMap["latitude"] = latitude
+                            hashMap["longitude"] = longitude
+                            hashMap["imageUrl"] = imageUrl
+                            hashMap["status"] = 0
+                        }
+                        db.collection("report")
+                            .add(hashMap)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Laporan Terkirim", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this, "Laporan Gagal Terkirim", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+
+                    }
+                })
+
+            .addOnFailureListener(OnFailureListener { e ->
+                print(e.message)
+            })
     }
 
 }

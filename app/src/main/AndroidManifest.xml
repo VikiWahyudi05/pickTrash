@@ -31,7 +31,7 @@
         <activity
             android:name=".admin.LaporanAdminActivity"
             android:exported="false"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".admin.AdminHomeActivity"
             android:exported="false"
@@ -43,7 +43,7 @@
         <activity
             android:name=".user.UserHomeActivity"
             android:exported="false"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".LoginActivity"
             android:exported="false"
