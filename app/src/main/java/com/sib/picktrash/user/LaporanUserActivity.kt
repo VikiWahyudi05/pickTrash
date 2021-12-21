@@ -65,9 +65,11 @@ class LaporanUserActivity : AppCompatActivity() {
         binding.apply {
             val name = detailName.text.toString()
             val description = detailDescription.text.toString()
+            val alamat = detailAlamat.text.toString()
 
             if (name.isEmpty()) detailName.error = "Nama tidak boleh kosong"
             if (description.isEmpty()) detailDescription.error = "Deskripsi tidak boleh kosong"
+            if (alamat.isEmpty()) detailAlamat.error = "Alamat tidak boleh kosong"
             else {
                 saveReport()
             }
@@ -99,7 +101,8 @@ class LaporanUserActivity : AppCompatActivity() {
                             hashMap["latitude"] = latitude
                             hashMap["longitude"] = longitude
                             hashMap["imageUrl"] = imageUrl
-                            hashMap["status"] = 0
+                            hashMap["alamat"] = detailAlamat.text.toString()
+                            hashMap["status"] = "0"
                         }
                         db.collection("report")
                             .add(hashMap)

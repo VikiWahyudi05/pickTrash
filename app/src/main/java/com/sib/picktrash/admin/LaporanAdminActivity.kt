@@ -36,10 +36,12 @@ class LaporanAdminActivity : AppCompatActivity() {
                         document.data.get("description") as String,
                         document.data.get("latitude") as Double,
                         document.data.get("longitude") as Double,
-                        document.data.get("imageUrl") as String
+                        document.data.get("imageUrl") as String,
+                        document.data.get("alamat") as String,
+                        document.data.get("status") as String
                     )))
                 }
-                var laporanAdapter = LaporanAdapter(listReport)
+                val laporanAdapter = LaporanAdapter(listReport)
                 binding.rvLaporan.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = laporanAdapter

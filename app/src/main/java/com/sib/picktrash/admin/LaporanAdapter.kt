@@ -39,6 +39,8 @@ class LaporanAdapter (private val laporan:List<LaporanModel>) : RecyclerView.Ada
                 intent.putExtra(DetailLaporanActivity.EXTRA_LATITUDE, laporan.latitude)
                 intent.putExtra(DetailLaporanActivity.EXTRA_LONGITUDE, laporan.longitude)
                 intent.putExtra(DetailLaporanActivity.EXTRA_IMAGE_URL, laporan.imageUrl)
+                intent.putExtra(DetailLaporanActivity.EXTRA_ALAMAT, laporan.alamat)
+                intent.putExtra(DetailLaporanActivity.EXTRA_STATUS, laporan.status)
                 itemView.context.startActivity(intent)
             }
         }

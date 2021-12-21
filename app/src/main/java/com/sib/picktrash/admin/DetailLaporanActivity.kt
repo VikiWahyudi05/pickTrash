@@ -1,13 +1,25 @@
 package com.sib.picktrash.admin
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentId
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.ktx.Firebase
 import com.sib.picktrash.databinding.ActivityDetailLaporanBinding
+import com.sib.picktrash.user.LaporanUserActivity
 
 class DetailLaporanActivity : AppCompatActivity() {
 
@@ -17,9 +29,13 @@ class DetailLaporanActivity : AppCompatActivity() {
         const val EXTRA_LATITUDE = "extra_latitude"
         const val EXTRA_LONGITUDE = "extra_longitude"
         const val EXTRA_IMAGE_URL = "extra_img_url"
+        const val EXTRA_ALAMAT = "extra_alamat"
+        const val EXTRA_STATUS = "extra_status"
     }
 
     private lateinit var binding: ActivityDetailLaporanBinding
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +48,8 @@ class DetailLaporanActivity : AppCompatActivity() {
         val latitude = intent.getDoubleExtra(EXTRA_LATITUDE,0.0)
         val longitude = intent.getDoubleExtra(EXTRA_LONGITUDE,0.0)
         val imageUrl = intent.getStringExtra(EXTRA_IMAGE_URL)
+        val alamat = intent.getStringExtra(EXTRA_ALAMAT)
+        val status = intent.getStringExtra(EXTRA_STATUS)
 
 
         binding.apply {
@@ -39,6 +57,7 @@ class DetailLaporanActivity : AppCompatActivity() {
             tvDeskripsiDetail.text = deskripsi
             tvLatitude.text = "Latitude : "+latitude.toString()
             tvLongitude.text = "Longitude : "+longitude.toString()
+            tvAlamat.text = alamat
 
             Glide.with(this@DetailLaporanActivity)
                 .load(imageUrl)
@@ -46,21 +65,60 @@ class DetailLaporanActivity : AppCompatActivity() {
                 .into(imgDetail)
         }
 
+        if (status == "0") {
+            binding.btnProses.visibility = View.VISIBLE
+        } else if (status == "2") {
+            binding.btnSelesai.visibility = View.GONE
+        } else {
+            binding.btnSelesai.visibility = View.VISIBLE
+        }
+
+        binding.btnSelesai.setOnClickListener {
+            val db = FirebaseFirestore.getInstance()
+
+            val query = db.collection("report").whereEqualTo("name", binding.tvNamaPelapor.text.toString()).get()
+
+            val status = hashMapOf(
+                "status" to "2"
+            )
+
+            query.addOnSuccessListener {
+                for (document in it){
+                    db.collection("report").document(document.id).set(status, SetOptions.merge())
+                    Log.i("TAG", "${db.collection("report").document(document.id).set(status, SetOptions.merge())}")
+
+                }
+            }
+        }
+
 
         binding.btnProses.setOnClickListener {
             val navigationIntentUri: Uri =
                 Uri.parse("google.navigation:q=$latitude,$longitude") //creating intent with latlng
             val mapIntent = Intent(Intent.ACTION_VIEW, navigationIntentUri)
-            val intent = Intent(it.context,DetailLaporanActivity::class.java)
-            intent.putExtra(EXTRA_NAME, namaPelapor)
-            intent.putExtra(EXTRA_DESKRIPSI, deskripsi)
-            intent.putExtra(EXTRA_LATITUDE, latitude)
-            intent.putExtra(EXTRA_LONGITUDE, longitude)
-            intent.putExtra(EXTRA_IMAGE_URL, imageUrl)
-            it.context.startActivity(intent)
             mapIntent.setPackage("com.google.android.apps.maps")
             startActivity(mapIntent)
+
+            val db = FirebaseFirestore.getInstance()
+
+            val query = db.collection("report").whereEqualTo("name", binding.tvNamaPelapor.text.toString()).get()
+
+            val status = hashMapOf(
+                "status" to "1"
+            )
+
+            query.addOnSuccessListener {
+                for (document in it){
+                    db.collection("report").document(document.id).set(status, SetOptions.merge())
+                    Log.i("TAG", "${db.collection("report").document(document.id).set(status, SetOptions.merge())}")
+
+                }
+            }
+
         }
 
     }
+
+
+
 }
