@@ -36,12 +36,10 @@ class FinishLaporanFragment : Fragment() {
                 .addOnSuccessListener {
                     val listReport: ArrayList<LaporanModel> = ArrayList()
                     listReport.clear()
-//                    if (it.documents.getString("status") as String == "2" ) {
-//
-//
-//                    }
+                    showProgressBar(false)
                     for (document in it) {
                         if (document.getString("status") as String == "2") {
+                            showProgressBar(false)
                             listReport.add((LaporanModel(
                                 document.data.get("name") as String,
                                 document.data.get("description") as String,
@@ -66,6 +64,10 @@ class FinishLaporanFragment : Fragment() {
                     Log.v("TAG", "gagal mengambil data")
                 }
         }
+    }
+
+    private fun showProgressBar(state: Boolean) {
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
     }
 
 

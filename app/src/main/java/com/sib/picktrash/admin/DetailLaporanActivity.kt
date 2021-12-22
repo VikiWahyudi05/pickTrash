@@ -76,7 +76,7 @@ class DetailLaporanActivity : AppCompatActivity() {
         binding.btnSelesai.setOnClickListener {
             val db = FirebaseFirestore.getInstance()
 
-            val query = db.collection("report").whereEqualTo("name", binding.tvNamaPelapor.text.toString()).get()
+            val query = db.collection("report").whereEqualTo("imageUrl", imageUrl).get()
 
             val status = hashMapOf(
                 "status" to "2"
@@ -101,7 +101,7 @@ class DetailLaporanActivity : AppCompatActivity() {
 
             val db = FirebaseFirestore.getInstance()
 
-            val query = db.collection("report").whereEqualTo("name", binding.tvNamaPelapor.text.toString()).get()
+            val query = db.collection("report").whereEqualTo("imageUrl", imageUrl).get()
 
             val status = hashMapOf(
                 "status" to "1"

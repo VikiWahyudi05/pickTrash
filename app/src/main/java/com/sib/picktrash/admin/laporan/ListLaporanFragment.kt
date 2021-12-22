@@ -36,8 +36,10 @@ class ListLaporanFragment : Fragment() {
                 .addOnSuccessListener {
                     val listReport: ArrayList<LaporanModel> = ArrayList()
                     listReport.clear()
+                    showProgressBar(true)
                     for (document in it) {
                         if (document.getString("status") as String == "0") {
+                            showProgressBar(false)
                             listReport.add((LaporanModel(
                                 document.data.get("name") as String,
                                 document.data.get("description") as String,
@@ -65,6 +67,8 @@ class ListLaporanFragment : Fragment() {
         }
     }
 
-
+    private fun showProgressBar(state: Boolean) {
+        listBinding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
+    }
 }
 

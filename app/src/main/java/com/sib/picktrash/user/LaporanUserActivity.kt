@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
@@ -24,6 +25,8 @@ class LaporanUserActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLaporanUserBinding
     private lateinit var imageUri : Uri
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +88,9 @@ class LaporanUserActivity : AppCompatActivity() {
 
         val fileName = UUID.randomUUID().toString() + ".jpg"
 
+        auth = FirebaseAuth.getInstance()
+        val fUser = auth.currentUser
+
         val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
 
         refStorage.putFile(imageUri)
@@ -96,6 +102,7 @@ class LaporanUserActivity : AppCompatActivity() {
                         val hashMap: HashMap<String, Any> = HashMap()
 
                         binding.apply {
+                            hashMap["id"] = fUser!!.uid
                             hashMap["name"] = detailName.text.toString()
                             hashMap["description"] = detailDescription.text.toString()
                             hashMap["latitude"] = latitude
