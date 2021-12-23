@@ -25,4 +25,12 @@ Hak akses admin :
   * Setelah itu, tekan tombol "proses laporan" untuk memproses laporan, dan akan langsung akan di arahkkan ke google maps untuk melakukan navigasi
     ke lokasi tujuan
   * tekan tombol "laporan selesai", jika laporan telah di proses
+
+
+Login :
+ * Admin
+   - Email: vikiwahyudi1982@gmail.com
+   - Password: 12345678
+ * User
+   - Lakukan Register 
   
