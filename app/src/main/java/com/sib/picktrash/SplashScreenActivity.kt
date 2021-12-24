@@ -28,7 +28,7 @@ class SplashScreenActivity : AppCompatActivity() {
         splashScreen.start()
     }
 
-    companion object{
+    companion object {
         const val EXTRA_TIME = 2000L
     }
 

@@ -1,10 +1,8 @@
 package com.sib.picktrash
 
-import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -33,7 +31,7 @@ class RegisterActivity : AppCompatActivity() {
         fStore = FirebaseFirestore.getInstance()
 
         binding.apply {
-            btnRegister.setOnClickListener{
+            btnRegister.setOnClickListener {
                 checkField(etNama)
                 checkField(etEmail)
                 checkField(etPassword)
@@ -52,7 +50,11 @@ class RegisterActivity : AppCompatActivity() {
                             user!!.updateProfile(profileUpdates)
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
-                                        Toast.makeText(this@RegisterActivity, "Akun berhasil dibuat", Toast.LENGTH_SHORT)
+                                        Toast.makeText(
+                                            this@RegisterActivity,
+                                            "Akun berhasil dibuat",
+                                            Toast.LENGTH_SHORT
+                                        )
                                             .show()
                                         val df = fStore.collection("Users").document(
                                             user.uid
@@ -62,7 +64,12 @@ class RegisterActivity : AppCompatActivity() {
                                         userInfo["UserEmail"] = etEmail.getText().toString()
                                         userInfo["isUser"] = "1"
                                         df.set(userInfo)
-                                        startActivity(Intent(applicationContext, UserHomeActivity::class.java))
+                                        startActivity(
+                                            Intent(
+                                                applicationContext,
+                                                UserHomeActivity::class.java
+                                            )
+                                        )
                                         finish()
                                     }
                                 }
@@ -86,9 +93,6 @@ class RegisterActivity : AppCompatActivity() {
                 )
             }
         }
-
-
-
 
 
     }

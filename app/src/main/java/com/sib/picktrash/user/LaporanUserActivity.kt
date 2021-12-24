@@ -17,14 +17,14 @@ import kotlin.collections.HashMap
 
 class LaporanUserActivity : AppCompatActivity() {
 
-    companion object{
+    companion object {
         const val EXTRA_USER = "extra_user"
         const val EXTRA_LATITUDE = "extra_latitude"
         const val EXTRA_LONGITUDE = "extra_longitude"
     }
 
     private lateinit var binding: ActivityLaporanUserBinding
-    private lateinit var imageUri : Uri
+    private lateinit var imageUri: Uri
 
     private lateinit var auth: FirebaseAuth
 
@@ -52,7 +52,7 @@ class LaporanUserActivity : AppCompatActivity() {
         val intent = Intent()
         intent.type = "image/"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent,100)
+        startActivityForResult(intent, 100)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

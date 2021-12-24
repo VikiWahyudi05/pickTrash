@@ -1,29 +1,21 @@
 package com.sib.picktrash.admin
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.ui.AppBarConfiguration
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentId
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.ktx.Firebase
 import com.sib.picktrash.databinding.ActivityDetailLaporanBinding
-import com.sib.picktrash.user.LaporanUserActivity
 
 class DetailLaporanActivity : AppCompatActivity() {
 
-    companion object{
+    companion object {
         const val EXTRA_NAME = "extra_name"
         const val EXTRA_DESKRIPSI = "extra_deskripsi"
         const val EXTRA_LATITUDE = "extra_latitude"
@@ -45,8 +37,8 @@ class DetailLaporanActivity : AppCompatActivity() {
 
         val namaPelapor = intent.getStringExtra(EXTRA_NAME)
         val deskripsi = intent.getStringExtra(EXTRA_DESKRIPSI)
-        val latitude = intent.getDoubleExtra(EXTRA_LATITUDE,0.0)
-        val longitude = intent.getDoubleExtra(EXTRA_LONGITUDE,0.0)
+        val latitude = intent.getDoubleExtra(EXTRA_LATITUDE, 0.0)
+        val longitude = intent.getDoubleExtra(EXTRA_LONGITUDE, 0.0)
         val imageUrl = intent.getStringExtra(EXTRA_IMAGE_URL)
         val alamat = intent.getStringExtra(EXTRA_ALAMAT)
         val status = intent.getStringExtra(EXTRA_STATUS)
@@ -55,8 +47,8 @@ class DetailLaporanActivity : AppCompatActivity() {
         binding.apply {
             tvNamaPelapor.text = namaPelapor
             tvDeskripsiDetail.text = deskripsi
-            tvLatitude.text = "Latitude : "+latitude.toString()
-            tvLongitude.text = "Longitude : "+longitude.toString()
+            tvLatitude.text = "Latitude : " + latitude.toString()
+            tvLongitude.text = "Longitude : " + longitude.toString()
             tvAlamat.text = alamat
 
             Glide.with(this@DetailLaporanActivity)
@@ -83,9 +75,15 @@ class DetailLaporanActivity : AppCompatActivity() {
             )
 
             query.addOnSuccessListener {
-                for (document in it){
+                for (document in it) {
                     db.collection("report").document(document.id).set(status, SetOptions.merge())
-                    Log.i("TAG", "${db.collection("report").document(document.id).set(status, SetOptions.merge())}")
+                    Log.i(
+                        "TAG",
+                        "${
+                            db.collection("report").document(document.id)
+                                .set(status, SetOptions.merge())
+                        }"
+                    )
 
                 }
             }
@@ -108,9 +106,15 @@ class DetailLaporanActivity : AppCompatActivity() {
             )
 
             query.addOnSuccessListener {
-                for (document in it){
+                for (document in it) {
                     db.collection("report").document(document.id).set(status, SetOptions.merge())
-                    Log.i("TAG", "${db.collection("report").document(document.id).set(status, SetOptions.merge())}")
+                    Log.i(
+                        "TAG",
+                        "${
+                            db.collection("report").document(document.id)
+                                .set(status, SetOptions.merge())
+                        }"
+                    )
 
                 }
             }
@@ -118,7 +122,6 @@ class DetailLaporanActivity : AppCompatActivity() {
         }
 
     }
-
 
 
 }

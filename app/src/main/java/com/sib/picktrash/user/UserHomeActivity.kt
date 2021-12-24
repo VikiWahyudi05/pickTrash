@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sib.picktrash.LoginActivity
-import com.sib.picktrash.admin.LaporanAdminActivity
 import com.sib.picktrash.databinding.ActivityUserHomeBinding
 
 class UserHomeActivity : AppCompatActivity() {
@@ -29,6 +28,8 @@ class UserHomeActivity : AppCompatActivity() {
 
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
+
+    private var pressedTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +84,7 @@ class UserHomeActivity : AppCompatActivity() {
         binding.toUser.setOnClickListener(View.OnClickListener {
             val fUser: FirebaseUser? = fAuth.currentUser
             val intent = Intent(this, LaporanUserActivity::class.java)
-            intent.putExtra(LaporanUserActivity.EXTRA_USER, fUser?.displayName )
+            intent.putExtra(LaporanUserActivity.EXTRA_USER, fUser?.displayName)
             intent.putExtra(LaporanUserActivity.EXTRA_LATITUDE, latitude)
             intent.putExtra(LaporanUserActivity.EXTRA_LONGITUDE, longitude)
             startActivity(intent)
@@ -94,11 +95,16 @@ class UserHomeActivity : AppCompatActivity() {
 
     private fun getCurrentLocation() {
         // checking location permission
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             // request permission
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQ_CODE);
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQ_CODE
+            );
             return
         }
         fusedLocationClient.lastLocation
@@ -106,11 +112,13 @@ class UserHomeActivity : AppCompatActivity() {
                 // getting the last known or current location
                 latitude = location.latitude
                 longitude = location.longitude
-                Log.i("location","${location.latitude}+' '+${location.longitude}")
+                Log.i("location", "${location.latitude}+' '+${location.longitude}")
             }
             .addOnFailureListener {
-                Toast.makeText(this, "Failed on getting current location",
-                    Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this, "Failed on getting current location",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
 
@@ -121,15 +129,28 @@ class UserHomeActivity : AppCompatActivity() {
         when (requestCode) {
             LOCATION_PERMISSION_REQ_CODE -> {
                 if (grantResults.isNotEmpty() &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
                     // permission granted
                 } else {
                     // permission denied
-                    Toast.makeText(this, "You need to grant permission to access location",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this, "You need to grant permission to access location",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed()
+            finishAffinity()
+        } else {
+            Toast.makeText(baseContext, "Press back again to exit", Toast.LENGTH_SHORT).show()
+        }
+        pressedTime = System.currentTimeMillis()
     }
 
 }

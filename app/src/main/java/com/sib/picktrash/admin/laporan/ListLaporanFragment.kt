@@ -30,7 +30,7 @@ class ListLaporanFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        if (activity != null){
+        if (activity != null) {
             db.collection("report")
                 .get()
                 .addOnSuccessListener {
@@ -40,15 +40,17 @@ class ListLaporanFragment : Fragment() {
                     for (document in it) {
                         if (document.getString("status") as String == "0") {
                             showProgressBar(false)
-                            listReport.add((LaporanModel(
-                                document.data.get("name") as String,
-                                document.data.get("description") as String,
-                                document.data.get("latitude") as Double,
-                                document.data.get("longitude") as Double,
-                                document.data.get("imageUrl") as String,
-                                document.data.get("alamat") as String,
-                                document.data.get("status") as String
-                            )))
+                            listReport.add(
+                                (LaporanModel(
+                                    document.data.get("name") as String,
+                                    document.data.get("description") as String,
+                                    document.data.get("latitude") as Double,
+                                    document.data.get("longitude") as Double,
+                                    document.data.get("imageUrl") as String,
+                                    document.data.get("alamat") as String,
+                                    document.data.get("status") as String
+                                ))
+                            )
                         }
                         Log.i("TAG", it.documents[0]["status"].toString())
                         val laporanAdapter = LaporanAdapter(listReport)
